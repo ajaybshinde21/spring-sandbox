@@ -18,7 +18,14 @@ public class JdbcClient {
     createTable("User");
  }
 public void insertUser(User u) {
-
+   try{
+      jdbcTemplate.update("INSERT INTO User values(?,?,?,?)",u.getId(),u.getName(),u.getUsername(),u.getPassword());
+    }catch(DataAccessException dae){
+       ui.showError(dae.getMessage());
+       ui.printStackTrace(dae.getStackTrace());
+    }
+   
+		
 }
 private void createTable(String tableName) {
  try{
